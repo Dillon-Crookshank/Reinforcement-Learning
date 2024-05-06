@@ -10,3 +10,13 @@ ASSET_MANAGER.downloadAll(() => {
 
 	gameEngine.start();
 });
+
+const beginSimulation = () => {
+	gameEngine.entities = [];
+	
+	let maze = new Maze(gameEngine.ctx);
+	let agent = new Agent(maze);
+
+	gameEngine.addEntity(agent);
+	gameEngine.addEntity(maze);
+}

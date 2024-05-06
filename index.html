@@ -3,15 +3,80 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Game Project Title Goes Here</title>
-  
+    <title>Reinforcement Learning</title>
+    
+    <link type="text/css" rel="stylesheet" href="./style.css">
+
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./timer.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
     <script type="text/javascript" src="./util.js"></script>
     <script type="text/javascript" src="./main.js"></script>
+    <script type="text/javascript" src="./maze.js"></script>
+    <script type="text/javascript" src="./agent.js"></script>
 </head>
-<body>
-    <canvas id="gameWorld" width="1024" height="768" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+<body class="flex-row">
+    <div>
+        <canvas id="gameWorld" width="875" height="875" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
+    </div>
+    <div class="flex-col">
+        <div id="maze-settings" class="flex-col wrapper">
+            <p>Maze Settings</p>
+            
+            <div class="flex-row">
+                <label for="maze-size">Maze Size: </label>
+                <input type="number" id="maze-size" value="10" min="5" max="50" step="1">
+            </div>
+
+            <div class="flex-row">
+                <label for="num-walls">Number of Walls: </label>
+                <input type="number" id="num-walls" value="25" min="5" max="50" step="1">
+            </div>
+
+            <div class="flex-row">
+                <label for="num-pits">Number of Pits: </label>
+                <input type="number" id="num-pits" value="10" min="5" max="50" step="1">
+            </div>
+            
+        </div>
+        <div id="agent-settings" class="flex-col wrapper">
+            <p>Agent Settings</p>
+
+            <div class="flex-row">
+                <label for="agent-speed">Agent Speed: </label>
+                <input type="range" id="agent-speed" max="60" min="0" value="58">
+            </div>
+        </div>
+        <div id="epsilon-settings" class="flex-col wrapper">
+            <p>Epsilon Settings</p>
+
+            <p id="epsilon-display">epsilon: 1.0</p>
+
+            <div class="flex-row">
+                <label for="steps-per-decay">Steps Per Epsilon Decay: </label>
+                <input type="number" id="steps-per-decay" value="150" min="5" max="250" step="1">
+            </div>
+
+            <div class="flex-row">
+                <label for="decay-amt">Decay Amount: </label>
+                <input type="number" id="decay-amt" min="0" max="1" value="0.03" step="0.01">
+            </div>
+        </div>
+        <div id="bellman-settings" class="flex-col wrapper">
+            <p>Bellman Equation Settings</p>
+
+            <div class="flex-row">
+                <label for="learning-rate">Learning Rate: </label>
+                <input type="number" id="learning-rate" min="0" max="1" value="0.9" step="0.01">
+            </div>
+
+            <div class="flex-row">
+                <label for="discount-rate">Discount Rate: </label>
+                <input type="number" id="discount-rate" min="0" max="1" value="0.9" step="0.01">
+            </div>
+        </div>
+
+        <button type="button" onclick="beginSimulation()">Begin New Simulation</button>
+    </div>
 </body>
 </html>
