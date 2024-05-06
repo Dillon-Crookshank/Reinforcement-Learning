@@ -30,10 +30,16 @@ class Agent {
 
         this.epsilon = 1.0;
 
-        this.learning_rate = parseFloat(document.getElementById("learning-rate").value);
-        this.discount_rate = parseFloat(document.getElementById("discount-rate").value);
+        this.learning_rate = clamp(parseFloat(document.getElementById("learning-rate").value), 0, 1);
+        document.getElementById("learning-rate").value = this.learning_rate;
+
+        this.discount_rate = clamp(parseFloat(document.getElementById("discount-rate").value), 0, 1);
+        document.getElementById("discount-rate").value = this.discount_rate;
+
         this.steps_per_epsilon_decay = parseInt(document.getElementById("steps-per-decay").value);
-        this.epsilon_decay_amount = parseFloat(document.getElementById("decay-amt").value);
+        //document.getElementById("steps")
+
+        this.epsilon_decay_amount = clamp(parseFloat(document.getElementById("decay-amt").value), 0, 1);
     }
 
     // Q(state, action) = (1 - alpha) * Q(state, action) + alpha * (reward + gamma * max([Q(new_state, action) for action in new_state.actions]))
@@ -96,6 +102,9 @@ class Agent {
         ctx.closePath();
 
         // Draw all learned q-Values
+        if (!document.getElementById("q-values").checked) {
+            return;
+        }
 
         //Create a font of sans serif and a font size that is 1/5 the pixel height of a cell in the maze
         let font_size = this.maze.get_cell_pixel_size() / 5;
@@ -141,6 +150,7 @@ class Agent {
         let state_type = this.maze.get_state_type(this.state)
         if (state_type === 'goal' || state_type === 'pit') {
             this.state = this.maze.get_origin_cell();
+            return;
         }
         
         // Choose an action based on current epsilon value and the Q-values of the available actions
@@ -148,7 +158,7 @@ class Agent {
         if (Math.random() < this.epsilon) {
             // !!! If the agent is an explorer, check if any are unexplored and pick one of those !!!
 
-            if (explorer) {
+            if (document.getElementById("explorer").checked) {
                 let action_list = []
                 for (let a = 0; a < 4; a++) {
                     let key = this.get_key(this.state, a)
@@ -182,6 +192,14 @@ class Agent {
             }
         }
 
+        let attempted_action = action;
+        //Do an icy check and change the action
+        if (document.getElementById("icy").checked) {
+            if (Math.random() <= parseFloat(document.getElementById("slip-chance").value)) {
+                action = (action + (1 + randomInt(2) * 2)) % 4;
+            }
+        }
+
         // Save the chosen state-action pair to update Q-value after action
         let old_state = this.state;
 
@@ -210,11 +228,13 @@ class Agent {
         this.state = new_state;
 
         // Update the Q-value of the saved state-action pair using values from the new state
-        this.bellman(old_state, action, new_state);
+        this.bellman(old_state, attempted_action, new_state);
 
         // Decay epsilon value
         if (this.epsilon > 0 && this.step_count % this.steps_per_epsilon_decay + 1 === this.steps_per_epsilon_decay) {
             this.epsilon -= this.epsilon_decay_amount;
+
+            this.epsilon = Math.max(this.epsilon, 0);
 
             document.getElementById("epsilon-display").textContent = `epsilon: ${this.epsilon.toFixed(2)}`
         }

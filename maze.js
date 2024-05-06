@@ -1,15 +1,15 @@
 const size_inset_ratio = 10
 
-// Turn into UI Options
-//const maze_size = 10;
-//const walls = 25;
-//const pits = 10;
-
 class Maze {
     constructor (ctx) {
-        this.maze_size = parseInt(document.getElementById("maze-size").value);
-        this.num_walls = parseInt(document.getElementById("num-walls").value);
-        this.num_pits = parseInt(document.getElementById("num-pits").value);
+        this.maze_size = clamp(parseInt(document.getElementById("maze-size").value), 5, 20);
+        document.getElementById("maze-size").value = this.maze_size;
+
+        this.num_walls = clamp(parseInt(document.getElementById("num-walls").value), 0, Math.min(Math.floor((this.maze_size * this.maze_size) / 3), 100));
+        document.getElementById("num-walls").value = this.num_walls;
+
+        this.num_pits = clamp(parseInt(document.getElementById("num-pits").value), 0, Math.min(Math.floor((this.maze_size * this.maze_size) / 3), 100));
+        document.getElementById("num-pits").value = this.num_pits;
 
         let canvas_size = ctx.canvas.height;
         this.pixel_ratio = canvas_size / (1 + this.maze_size * (size_inset_ratio + 1));
@@ -126,8 +126,8 @@ class Maze {
         //Place goal in 4th quadrant -> 4
         found = false
         while (!found) {
-            let y = randomInt((this.maze_size / 2)) + (this.maze_size / 2)
-            let x = randomInt((this.maze_size / 2)) + (this.maze_size / 2)
+            let y = randomInt(Math.round(this.maze_size / 2)) + Math.floor(this.maze_size / 2)
+            let x = randomInt(Math.round(this.maze_size / 2)) + Math.floor(this.maze_size / 2)
 
             if (this.state_grid[y][x] === 0) {
                 this.state_grid[y][x] = 4;

@@ -15,62 +15,82 @@
     <script type="text/javascript" src="./maze.js"></script>
     <script type="text/javascript" src="./agent.js"></script>
 </head>
-<body class="flex-row">
+<body class="flex-row base">
     <div>
         <canvas id="gameWorld" width="875" height="875" style="background: white; border: 1px solid black" tabindex="0" autofocus></canvas>
     </div>
-    <div class="flex-col">
-        <div id="maze-settings" class="flex-col wrapper">
-            <p>Maze Settings</p>
+    <div class="flex-col base">
+        <div id="maze-settings" class="flex-col wrapper" style="padding:0px 29px 0px 29px">
+            <h4 class="text">Maze Settings</h4>
             
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="maze-size">Maze Size: </label>
-                <input type="number" id="maze-size" value="10" min="5" max="50" step="1">
+                <input type="number" id="maze-size" value="10" min="5" max="20" step="1">
             </div>
 
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="num-walls">Number of Walls: </label>
-                <input type="number" id="num-walls" value="25" min="5" max="50" step="1">
+                <input type="number" id="num-walls" value="25" min="0" max="100" step="1">
             </div>
 
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="num-pits">Number of Pits: </label>
-                <input type="number" id="num-pits" value="10" min="5" max="50" step="1">
+                <input type="number" id="num-pits" value="3" min="0" max="100" step="1">
+            </div>
+
+            <div class="flex-row base">
+                <label for="icy">Icy: </label>
+                <input type="checkbox" id="icy">
+            </div>
+
+            <div class="flex-row base">
+                <label for="slip-chance">Slip Chance: </label>
+                <input type="number" id="slip-chance" value="0.1" min="0" max="1" step="0.01">
+            </div>
+
+            <div class="flex-row base">
+                <label for="q-values">Show Q-Values: </label>
+                <input type="checkbox" id="q-values" checked="true">
             </div>
             
         </div>
-        <div id="agent-settings" class="flex-col wrapper">
-            <p>Agent Settings</p>
+        <div id="agent-settings" class="flex-col wrapper" style="padding:0px 13px 0px 13px">
+            <h4 class="text">Agent Settings</h4>
 
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="agent-speed">Agent Speed: </label>
                 <input type="range" id="agent-speed" max="60" min="0" value="58">
             </div>
+
+            <div class="flex-row base">
+                <label for="explorer">Explorer: </label>
+                <input type="checkbox" id="explorer" checked="true">
+            </div>
         </div>
         <div id="epsilon-settings" class="flex-col wrapper">
-            <p>Epsilon Settings</p>
+            <h4 class="text">Epsilon Settings</h4>
 
             <p id="epsilon-display">epsilon: 1.0</p>
 
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="steps-per-decay">Steps Per Epsilon Decay: </label>
                 <input type="number" id="steps-per-decay" value="150" min="5" max="250" step="1">
             </div>
 
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="decay-amt">Decay Amount: </label>
                 <input type="number" id="decay-amt" min="0" max="1" value="0.03" step="0.01">
             </div>
         </div>
-        <div id="bellman-settings" class="flex-col wrapper">
-            <p>Bellman Equation Settings</p>
+        <div id="bellman-settings" class="flex-col wrapper" style="padding:0px 32px 0px 32px">
+            <h4 class="text">Bellman Equation Settings</h4>
 
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="learning-rate">Learning Rate: </label>
                 <input type="number" id="learning-rate" min="0" max="1" value="0.9" step="0.01">
             </div>
 
-            <div class="flex-row">
+            <div class="flex-row base">
                 <label for="discount-rate">Discount Rate: </label>
                 <input type="number" id="discount-rate" min="0" max="1" value="0.9" step="0.01">
             </div>

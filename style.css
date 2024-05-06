@@ -25,6 +25,18 @@ body {
     border-style: solid;
 }
 
+.base {
+    padding: 5px;
+}
+
+.text {
+    margin: 5px;
+}
+
+#epsilon-display {
+    margin:5px;
+}
+
 #maze-settings {
     background-color: aquamarine;
 }
